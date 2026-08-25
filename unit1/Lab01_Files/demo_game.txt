@@ -1,0 +1,108 @@
+CSC 240 - Lab 1: Tic-Tac-Toe
+Reference Game Transcript
+
+This shows the board rendering, the prompt wording, and the handling of an occupied
+square that your program must match. Rows and columns are numbered 1 to 3. A move is
+entered as two numbers separated by a space: row first, then column.
+
+YOUR OUTPUT WILL NOT MATCH THIS LINE FOR LINE, and it is not supposed to. play()
+picks the starting player at random, so about half your runs will open with O
+instead of X. What must match is the formatting and the behaviour, not the moves.
+
+Watch the fifth prompt in particular. Player X enters "3 1", which X already
+occupies. The move is rejected and X is prompted again. Play does NOT pass to O -
+a rejected move costs the player nothing but a retry.
+
+================================================================================
+
+     1   2   3
+   +---+---+---+
+ 1 |   |   |   |
+   +---+---+---+
+ 2 |   |   |   |
+   +---+---+---+
+ 3 |   |   |   |
+   +---+---+---+
+
+Player X enter move: 2 2
+
+     1   2   3
+   +---+---+---+
+ 1 |   |   |   |
+   +---+---+---+
+ 2 |   | X |   |
+   +---+---+---+
+ 3 |   |   |   |
+   +---+---+---+
+
+Player O enter move: 1 1
+
+     1   2   3
+   +---+---+---+
+ 1 | O |   |   |
+   +---+---+---+
+ 2 |   | X |   |
+   +---+---+---+
+ 3 |   |   |   |
+   +---+---+---+
+
+Player X enter move: 3 1
+
+     1   2   3
+   +---+---+---+
+ 1 | O |   |   |
+   +---+---+---+
+ 2 |   | X |   |
+   +---+---+---+
+ 3 | X |   |   |
+   +---+---+---+
+
+Player O enter move: 3 3
+
+     1   2   3
+   +---+---+---+
+ 1 | O |   |   |
+   +---+---+---+
+ 2 |   | X |   |
+   +---+---+---+
+ 3 | X |   | O |
+   +---+---+---+
+
+Player X enter move: 3 1
+That square is already taken. Try again.
+
+Player X enter move: 1 3
+
+     1   2   3
+   +---+---+---+
+ 1 | O |   | X |
+   +---+---+---+
+ 2 |   | X |   |
+   +---+---+---+
+ 3 | X |   | O |
+   +---+---+---+
+
+Player X wins!
+
+================================================================================
+
+WHAT TO CHECK IN YOUR OWN OUTPUT
+
+1. The board prints once before the first prompt, and once after every accepted
+   move. It does not print after a rejected move.
+
+2. The prompt is exactly:  Player X enter move:
+   with a single space after the colon, and X or O as appropriate.
+
+3. An occupied square produces the rejection message and re-prompts the SAME
+   player. isValidMove is what decides this.
+
+4. A win is announced as:  Player X wins!
+   A full board with no winner is announced as:  The game is a draw.
+
+5. Wins must be detected on all eight lines: three rows, three columns, and both
+   diagonals. This transcript only exercises one of them - test the rest
+   yourself before you submit.
+
+6. Out-of-range input, such as "4 1" or "0 2", is also an invalid move and must
+   be rejected the same way rather than crashing or writing outside the array.
