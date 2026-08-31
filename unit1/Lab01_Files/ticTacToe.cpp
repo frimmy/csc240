@@ -14,6 +14,12 @@ using namespace std;
 // sentence — after pass i, the tic tac toe board is evaluated against
 // the winning line configs. Only if there is no winner or draw does another
 // move continue.
+// preconditions:
+//  1. the board is initialized as array of 3 arrays of 3 spots for char types.
+//  2. keepPlaying
+//
+// tournament loop: each loop of the
+// game play loop: each call of getXOMove places 'X' or 'O'
 void ticTacToe::play() {
     srand(time(0)); // set the random seed based on time.
     bool done = false;
@@ -62,6 +68,8 @@ void ticTacToe::play() {
     }
 }
 
+// pre-condtion
+// post-condition
 void ticTacToe::displayBoard() const {
     cout << endl
          << setw(3) << "" << setw(4) << "1" << setw(4) << "2" << setw(4) << "3"
@@ -77,6 +85,8 @@ void ticTacToe::displayBoard() const {
     }
 }
 
+// pre-condtion
+// post-condition
 bool ticTacToe::isValidMove(int row, int col) const {
     int gridRow = row - 1, gridCol = col - 1;
     bool valid = false;
@@ -100,6 +110,9 @@ bool ticTacToe::isValidMove(int row, int col) const {
  a. if over - display win/draw and return true
  b. return false
 */
+
+// pre-condtion
+// post-condition
 bool ticTacToe::getXOMove(char playerSymbol) {
     int row = -1, col = -1;
     status currentStatus;
