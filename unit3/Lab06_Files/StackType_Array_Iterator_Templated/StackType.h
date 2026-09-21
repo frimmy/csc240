@@ -64,9 +64,15 @@ template <typename ItemType> class StackType {
     friend bool Identical(const StackType<ItemType>& stack1,
                           const StackType<ItemType>& stack2) {
         int idx = 0;
-        if (stack1.top != stack2.top) {
+        // base cases
+        if (stack1.IsEmpty() && stack2.IsEmpty())
+            return true;
+        if (stack1.IsEmpty() || stack2.IsEmpty())
+            return true;
+
+        if (stack1.top != stack2.top)
             return false;
-        }
+
         while (idx <= stack1.top) {
             if (stack1[idx] != stack2[idx]) {
                 return false;

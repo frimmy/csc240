@@ -25,6 +25,36 @@ template <class ItemType> class StackTypeLinked {
     bool IsEmpty() const;
     bool IsFull() const;
     void Print();
+    friend bool Identical(const StackTypeLinked<ItemType>& stack1,
+                          const StackTypeLinked<ItemType>& stack2) {
+
+        // make copies for passing to recursive helper
+        StackTypeLinked<ItemType> copyStack1(stack1);
+        StackTypeLinked<ItemType> copyStack2(stack2);
+
+        return IdenticalRecurse(copyStack1, copyStack2);
+    }
+
+    static bool IdenticalRecurse(StackTypeLinked<ItemType>& stack1,
+                                 StackTypeLinked<ItemType>& stack2) {
+
+        // base case
+        if (stack1.IsEmpty() && stack2.IsEmpty())
+            return true;
+        if (stack1.IsEmpty() || stack2.IsEmpty())
+            return false;
+
+        ItemType top1 = stack1.Top();
+        ItemType top2 = stack2.Top();
+        if (top1 != top2)
+            return false;
+        else {
+            // pop items and recurse
+            stack1.Pop();
+            stack2.Pop();
+            return IdenticalRecurse(stack1, stack2);
+        }
+    }
 
   private:
     NodeType<ItemType>* topPtr;

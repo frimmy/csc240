@@ -26,11 +26,24 @@ int main() {
     anotherStack.Push('D');
     anotherStack.Push('E');
     anotherStack.Print();
+    StackTypeLinked<char> andAnotherStack;
+    anotherStack.Push('B');
+    anotherStack.Push('C');
+    anotherStack.Push('D');
+    anotherStack.Push('E');
+    anotherStack.Print();
     // Test operator=
     anotherStack = newStack;
     anotherStack.Print();
     cout << "====== Test ReplaceItem ======" << endl;
     ReplaceItem(myStack, 'A', 'Z');
     myStack.Print();
+    cout << "====== Test Identical ======" << endl;
+    cout << "Identical stacks: "
+         << (Identical(anotherStack, andAnotherStack) ? "true" : "false")
+         << endl;
+    cout << "Identical stacks: "
+         << (Identical(andAnotherStack, andAnotherStack) ? "true" : "false")
+         << endl;
     return 0;
 }
