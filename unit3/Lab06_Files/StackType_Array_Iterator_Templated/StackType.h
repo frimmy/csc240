@@ -61,6 +61,10 @@ template <typename ItemType> class StackType {
     StackTypeIterator<ItemType> begin();
     StackTypeIterator<ItemType> end();
 
+    // returns true if two stacks are identical:
+    // Pre:  Stack has been initialized.
+    // Post: If stack1 is equivalent to stack2 returns true
+    //       else returns false.
     friend bool Identical(const StackType<ItemType>& stack1,
                           const StackType<ItemType>& stack2) {
         int idx = 0;
@@ -170,6 +174,13 @@ template <typename ItemType> void StackType<ItemType>::Print() {
     cout << ":Bottom" << endl;
 }
 
+// Replaces all occurrences of oldItem with newItem.
+// Precondition: stack has been initialized.
+// Postcondition: Each occurrence of oldItem in stack has been replaced by
+// newItem.
+// Invariant: the array holds exactly count items in positions 0..count - 1.
+// We only overwrite a value at a fixed index, so positions are untouched by
+// construction
 template <typename ItemType>
 void ReplaceItem(StackType<ItemType>& stack, ItemType oldItem,
                  ItemType newItem) {

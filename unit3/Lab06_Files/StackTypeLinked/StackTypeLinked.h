@@ -25,6 +25,11 @@ template <class ItemType> class StackTypeLinked {
     bool IsEmpty() const;
     bool IsFull() const;
     void Print();
+
+    // returns true if two stacks are identical:
+    // Pre:  Stack has been initialized.
+    // Post: If stack1 is equivalent to stack2 returns true
+    //       else returns false.
     friend bool Identical(const StackTypeLinked<ItemType>& stack1,
                           const StackTypeLinked<ItemType>& stack2) {
 
@@ -220,6 +225,13 @@ template <class ItemType> bool StackTypeLinked<ItemType>::IsEmpty() const {
     return (topPtr == nullptr);
 }
 
+// Replaces all occurrences of oldItem with newItem.
+// Precondition: stack has been initialized.
+// Postcondition: Each occurrence of oldItem in stack has been replaced by
+// newItem.
+// Invariant: top points at the most recently pushed, not-yet-popped element.
+// each recursive frame pushes back the exact element it popped, so unwinding
+// restores every element to its original position.
 template <class ItemType>
 void ReplaceItem(StackTypeLinked<ItemType>& stack, ItemType oldItem,
                  ItemType newItem) {

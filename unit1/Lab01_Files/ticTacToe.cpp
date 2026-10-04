@@ -68,7 +68,7 @@ void ticTacToe::play() {
     }
 }
 
-// pre-condtion
+// pre-condition
 // post-condition
 void ticTacToe::displayBoard() const {
     cout << endl
@@ -85,8 +85,8 @@ void ticTacToe::displayBoard() const {
     }
 }
 
-// pre-condtion
-// post-condition
+// pre-condition: board is initialzed
+// post-condition: evaluates if provided row/col are valid
 bool ticTacToe::isValidMove(int row, int col) const {
     int gridRow = row - 1, gridCol = col - 1;
     bool valid = false;
@@ -111,8 +111,8 @@ bool ticTacToe::isValidMove(int row, int col) const {
  b. return false
 */
 
-// pre-condtion
-// post-condition
+// pre-condition: board is initialized
+// post-condition: valid moves for provided player are populated on board
 bool ticTacToe::getXOMove(char playerSymbol) {
     int row = -1, col = -1;
     status currentStatus;
