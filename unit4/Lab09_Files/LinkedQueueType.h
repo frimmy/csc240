@@ -3,13 +3,6 @@
 // Invariant: rear->next points at the first element, with length reflecting the
 // number of elements in the queue. Rear reflects the element most recently
 // added to the queue.
-// Creative Feature:
-// What does your feature do? Rotates the queue so the front is at the rear
-// What concept from your AI Learning Query did it use? Used concept of
-// safe checking (so we don't operate on empty queue).
-// What did you try that did not work? n/a -- was pretty trivial after
-// everything else was addressed. What would you do next if you had another
-// week? directional rotation and rotations by a provided number
 #ifndef LINKEDQUEUE_H
 #define LINKEDQUEUE_H
 #include "LinkedQueueTypeIterator.h"
@@ -51,32 +44,33 @@ template <class ItemType> class LinkedQueueType {
     //       and item is undefined
     //       else front element has been removed from queue and
     //       item is a copy of removed element.
-    void Print();
+    void Print() const;
     // Function: Display the contents of the QueType in the console output.
     // Post: The QueType remains unchanged.
     void Rotate();
     // Function: Moves the front item to the rear
     // Post: Front is rear
     LinkedQueueTypeIterator<ItemType> begin();
+    LinkedQueueTypeIterator<ItemType, const ItemType&> begin() const;
+
     LinkedQueueTypeIterator<ItemType> end();
+    LinkedQueueTypeIterator<ItemType, const ItemType&> end() const;
 
   private:
     NodeType<ItemType>* rear;
     int length = 0;
 };
 
-template <class ItemType> void LinkedQueueType<ItemType>::Print() {
+template <class ItemType> void LinkedQueueType<ItemType>::Print() const {
     if (IsEmpty()) {
         std::cout << "already empty" << std::endl;
         return;
     }
-    NodeType<ItemType>* temp = rear->next;
     std::cout << "Front:";
-    while (temp != rear) {
-        std::cout << temp->info << " ";
-        temp = temp->next;
+    for (const auto& i : *this) {
+        std::cout << i << " ";
     }
-    std::cout << temp->info << ":Rear" << std::endl;
+    std::cout << ":Rear" << std::endl;
 }
 
 // Class constructor.
@@ -248,6 +242,9 @@ template <class ItemType> void LinkedQueueType<ItemType>::Rotate() {
         rear = ptr;
     }
 }
+// Function: begin method for adhering to interator interface
+// pre-condition: Queue is initialized
+// post-condition: Returns iterator reference at beginning of queue
 template <class ItemType>
 LinkedQueueTypeIterator<ItemType> LinkedQueueType<ItemType>::begin() {
     // start at "beginning" which is rear->next
@@ -255,11 +252,30 @@ LinkedQueueTypeIterator<ItemType> LinkedQueueType<ItemType>::begin() {
     LinkedQueueTypeIterator<ItemType> it(begin_ptr, 0);
     return it;
 }
+template <class ItemType>
+LinkedQueueTypeIterator<ItemType, const ItemType&>
+LinkedQueueType<ItemType>::begin() const {
+    // start at "beginning" which is rear->next
+    NodeType<ItemType>* begin_ptr = rear != nullptr ? rear->next : nullptr;
+    LinkedQueueTypeIterator<ItemType, const ItemType&> it(begin_ptr, 0);
+    return it;
+}
 
+// Function: end method for adhering to interator interface
+// pre-condition: Queue is initialized
+// post-condition: Returns iterator reference at end of queue
 template <class ItemType>
 LinkedQueueTypeIterator<ItemType> LinkedQueueType<ItemType>::end() {
     NodeType<ItemType>* end_ptr = rear != nullptr ? rear->next : nullptr;
     LinkedQueueTypeIterator<ItemType> it(end_ptr, length);
+    return it;
+}
+
+template <class ItemType>
+LinkedQueueTypeIterator<ItemType, const ItemType&>
+LinkedQueueType<ItemType>::end() const {
+    NodeType<ItemType>* end_ptr = rear != nullptr ? rear->next : nullptr;
+    LinkedQueueTypeIterator<ItemType, const ItemType&> it(end_ptr, length);
     return it;
 }
 #endif
