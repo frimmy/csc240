@@ -6,17 +6,17 @@ using namespace std;
 class FullQueue {};
 class EmptyQueue {};
 typedef char ItemType;
-class LinkedQueType {
+class LinkedQueueType {
   public:
-    friend ostream& operator<<(ostream& out, const LinkedQueType& q);
+    friend ostream& operator<<(ostream& out, const LinkedQueueType& q);
 
-    LinkedQueType();
+    LinkedQueueType();
     // Class constructor.
     // Because there is a default constructor, the precondition
     // that the queue has been initialized is omitted.
-    LinkedQueType(int max);
+    LinkedQueueType(int max);
     // Parameterized class constructor.
-    ~LinkedQueType();
+    ~LinkedQueueType();
     // Class destructor.
     void MakeEmpty();
     // Function: Initializes the queue to an empty state.
@@ -50,7 +50,7 @@ class LinkedQueType {
     int maxQue;
 };
 
-LinkedQueType::LinkedQueType(int max)
+LinkedQueueType::LinkedQueueType(int max)
 // Parameterized class constructor
 // Post: maxQue, front, and rear have been initialized.
 //       The array to hold the queue elements has been dynamically
@@ -61,7 +61,7 @@ LinkedQueType::LinkedQueType(int max)
     rear = maxQue - 1;
     items = new ItemType[maxQue];
 }
-LinkedQueType::LinkedQueType() // Default class constructor
+LinkedQueueType::LinkedQueueType() // Default class constructor
 // Post: maxQue, front, and rear have been initialized.
 //       The array to hold the queue elements has been dynamically
 //       allocated.
@@ -71,32 +71,32 @@ LinkedQueType::LinkedQueType() // Default class constructor
     rear = maxQue - 1;
     items = new ItemType[maxQue];
 }
-LinkedQueType::~LinkedQueType() // Class destructor
+LinkedQueueType::~LinkedQueueType() // Class destructor
 {
     delete[] items;
 }
 
-void LinkedQueType::MakeEmpty()
+void LinkedQueueType::MakeEmpty()
 // Post: front and rear have been reset to the empty state.
 {
     front = maxQue - 1;
     rear = maxQue - 1;
 }
 
-bool LinkedQueType::IsEmpty() const
+bool LinkedQueueType::IsEmpty() const
 // Returns true if the queue is empty; false otherwise.
 {
     return (rear == front);
 }
 #endif
 
-bool LinkedQueType::IsFull() const
+bool LinkedQueueType::IsFull() const
 // Returns true if the queue is full; false otherwise.
 {
     return ((rear + 1) % maxQue == front);
 }
 
-void LinkedQueType::Enqueue(ItemType newItem)
+void LinkedQueueType::Enqueue(ItemType newItem)
 // Post: If (queue is not full) newItem is at the rear of the queue;
 //       otherwise a FullQueue exception is thrown.
 {
@@ -108,7 +108,7 @@ void LinkedQueType::Enqueue(ItemType newItem)
     }
 }
 
-void LinkedQueType::Dequeue(ItemType& item)
+void LinkedQueueType::Dequeue(ItemType& item)
 // Post: If (queue is not empty) the front of the queue has been
 //       removed and a copy returned in item;
 //       otherwise a EmptyQueue exception has been thrown.
@@ -121,7 +121,7 @@ void LinkedQueType::Dequeue(ItemType& item)
     }
 }
 
-ItemType LinkedQueType::DequeueRear() {
+ItemType LinkedQueueType::DequeueRear() {
     ItemType item;
     if (IsEmpty())
         throw EmptyQueue();
@@ -132,7 +132,7 @@ ItemType LinkedQueType::DequeueRear() {
     return item;
 }
 
-void LinkedQueType::evacuate(int num) {
+void LinkedQueueType::evacuate(int num) {
     cout << "rear = " << rear << " front: " << front << endl;
     for (int i = 0; i < num; i++) {
         if (IsEmpty()) {
@@ -142,7 +142,7 @@ void LinkedQueType::evacuate(int num) {
     }
 }
 
-ostream& operator<<(ostream& out, const LinkedQueType& q) {
+ostream& operator<<(ostream& out, const LinkedQueueType& q) {
     if ((q.rear - q.front + q.maxQue) % q.maxQue == 0) {
         out << "Empty queue." << endl;
     } else {

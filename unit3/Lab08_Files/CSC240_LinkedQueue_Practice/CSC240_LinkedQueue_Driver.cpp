@@ -19,7 +19,7 @@
 using namespace std;
 
 int main() {
-    LinkedQueType<int> q;
+    LinkedQueueType<int> q;
     q.Enqueue(8);
     q.Enqueue(6);
     q.Enqueue(7);
@@ -33,14 +33,14 @@ int main() {
     cout << numFront << endl;
     q.Dequeue(numFront);
     cout << numFront << endl;
-    LinkedQueType<int> q2(q);
+    LinkedQueueType<int> q2(q);
     q.Print();
     q2.Print();
     q.Dequeue(numFront);
     cout << numFront << endl;
     q.Print();
     q2.Print();
-    LinkedQueType<int> q3 = q2;
+    LinkedQueueType<int> q3 = q2;
     cout << "Empty q3 " << endl;
     q3.MakeEmpty();
     q3.Print();
@@ -51,7 +51,7 @@ int main() {
     q3.Print();
     q3.Rotate();
     q3.Print();
-    LinkedQueType<int> q4;
+    LinkedQueueType<int> q4;
     q4.Enqueue(1);
     q4.Dequeue(numFront);
     // deque from empty

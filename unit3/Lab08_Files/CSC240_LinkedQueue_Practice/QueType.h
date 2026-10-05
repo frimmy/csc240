@@ -23,17 +23,17 @@ template <class ItemType> struct NodeType {
 
 class FullQueue {};
 class EmptyQueue {};
-template <class ItemType> class LinkedQueType {
+template <class ItemType> class LinkedQueueType {
   public:
-    LinkedQueType();
+    LinkedQueueType();
     // Class constructor.
     // Because there is a default constructor, the precondition
     // that the queue has been initialized is omitted.
-    ~LinkedQueType();
+    ~LinkedQueueType();
     // Class destructor.
-    LinkedQueType(const LinkedQueType& anotherQue);
+    LinkedQueueType(const LinkedQueueType& anotherQue);
     // Copy constructor
-    LinkedQueType<ItemType>& operator=(const LinkedQueType<ItemType>& rhs);
+    LinkedQueueType<ItemType>& operator=(const LinkedQueueType<ItemType>& rhs);
     // operator=
     void MakeEmpty();
     // Function: Initializes the queue to an empty state.
@@ -65,7 +65,7 @@ template <class ItemType> class LinkedQueType {
     int length = 0;
 };
 
-template <class ItemType> void LinkedQueType<ItemType>::Print() {
+template <class ItemType> void LinkedQueueType<ItemType>::Print() {
     if (IsEmpty()) {
         std::cout << "already empty" << std::endl;
         return;
@@ -80,14 +80,14 @@ template <class ItemType> void LinkedQueType<ItemType>::Print() {
 
 // Class constructor.
 // Post:  rear set to NULL.
-template <class ItemType> LinkedQueType<ItemType>::LinkedQueType() {
+template <class ItemType> LinkedQueueType<ItemType>::LinkedQueueType() {
     rear = nullptr;
     // rear->next = rear;
     length = 0;
 }
 
 template <class ItemType>
-void LinkedQueType<ItemType>::MakeEmpty()
+void LinkedQueueType<ItemType>::MakeEmpty()
 // Post: Queue is empty; all elements have been deallocated.
 {
     NodeType<ItemType>* tempPtr;
@@ -108,12 +108,12 @@ void LinkedQueType<ItemType>::MakeEmpty()
 }
 
 // Class destructor.
-template <class ItemType> LinkedQueType<ItemType>::~LinkedQueType() {
+template <class ItemType> LinkedQueueType<ItemType>::~LinkedQueueType() {
     MakeEmpty();
 }
 
 template <class ItemType>
-bool LinkedQueType<ItemType>::IsFull() const
+bool LinkedQueueType<ItemType>::IsFull() const
 // Returns true if there is no room for another ItemType
 //  on the free store; false otherwise.
 {
@@ -128,14 +128,14 @@ bool LinkedQueType<ItemType>::IsFull() const
 }
 
 template <class ItemType>
-bool LinkedQueType<ItemType>::IsEmpty() const
+bool LinkedQueueType<ItemType>::IsEmpty() const
 // Returns true if there are no elements on the queue; false otherwise.
 {
     return (length == 0);
 }
 
 template <class ItemType>
-void LinkedQueType<ItemType>::Enqueue(ItemType newItem)
+void LinkedQueueType<ItemType>::Enqueue(ItemType newItem)
 // Adds newItem to the rear of the queue.
 // Pre:  Queue has been initialized.
 // Post: If (queue is not full) newItem is at the rear of the queue;
@@ -159,7 +159,7 @@ void LinkedQueType<ItemType>::Enqueue(ItemType newItem)
 }
 
 template <class ItemType>
-void LinkedQueType<ItemType>::Dequeue(ItemType& item)
+void LinkedQueueType<ItemType>::Dequeue(ItemType& item)
 // Removes front item from the queue and returns it in item.
 // Pre:  Queue has been initialized and is not empty.
 // Post: If (queue is not empty) the front of the queue has been
@@ -182,7 +182,7 @@ void LinkedQueType<ItemType>::Dequeue(ItemType& item)
 }
 
 template <class ItemType>
-LinkedQueType<ItemType>::LinkedQueType(const LinkedQueType& anotherQue) {
+LinkedQueueType<ItemType>::LinkedQueueType(const LinkedQueueType& anotherQue) {
     NodeType<ItemType>* ptr1;
     NodeType<ItemType>* ptr2;
     NodeType<ItemType>* front;
@@ -209,8 +209,8 @@ LinkedQueType<ItemType>::LinkedQueType(const LinkedQueType& anotherQue) {
     }
 }
 template <class ItemType>
-LinkedQueType<ItemType>&
-LinkedQueType<ItemType>::operator=(const LinkedQueType<ItemType>& rhs) {
+LinkedQueueType<ItemType>&
+LinkedQueueType<ItemType>::operator=(const LinkedQueueType<ItemType>& rhs) {
     NodeType<ItemType>* ptr1;
     NodeType<ItemType>* ptr2;
     NodeType<ItemType>* front;
@@ -241,7 +241,7 @@ LinkedQueType<ItemType>::operator=(const LinkedQueType<ItemType>& rhs) {
 
 // Function: Moves the front item to the rear
 // Post: Front is rear
-template <class ItemType> void LinkedQueType<ItemType>::Rotate() {
+template <class ItemType> void LinkedQueueType<ItemType>::Rotate() {
     if (!IsEmpty()) {
         NodeType<ItemType>* ptr = rear->next;
         rear = ptr;

@@ -1,0 +1,14 @@
+---
+# Enable compiler warnings (similar to -Wall, -Wextra) and key bug-prevention checks
+Checks: >
+  -*,
+  clang-diagnostic-*,
+  bugprone-*,
+  cppcoreguidelines-init-variables,
+  modernize-use-nullptr,
+  readability-identifier-naming
+
+CheckOptions:
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack
+...

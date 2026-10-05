@@ -1,11 +1,7 @@
 #ifndef LINKEDQUEUETYPEITERATOR_H
 #define LINKEDQUEUETYPEITERATOR_H
+#include "NodeType.h"
 #include <stddef.h>
-// NodeType struct definition
-template <class ItemType> struct NodeType {
-    ItemType info;
-    NodeType<ItemType>* next;
-};
 // A template for an iterator that implements the contract required by the
 // range-based for-loop.
 template <class ItemType> class LinkedQueueTypeIterator {
@@ -28,24 +24,27 @@ template <class ItemType> class LinkedQueueTypeIterator {
 template <class ItemType>
 LinkedQueueTypeIterator<ItemType>::LinkedQueueTypeIterator(
     NodeType<ItemType>* start, int loc) {
-    // TODO
+    this->item = start;
+    location = loc;
 }
 
 template <class ItemType>
 ItemType& LinkedQueueTypeIterator<ItemType>::operator*() {
-    // TODO
+    return item->info;
 }
 
 template <class ItemType>
 LinkedQueueTypeIterator<ItemType>&
 LinkedQueueTypeIterator<ItemType>::operator++() {
-    // TODO
+    item = item->next;
+    location += 1;
+    return *this;
 }
 
 template <class ItemType>
 bool LinkedQueueTypeIterator<ItemType>::operator!=(
     const LinkedQueueTypeIterator<ItemType>& it) const {
-    // TODO
+    return location != it.location;
 }
 
 #endif
