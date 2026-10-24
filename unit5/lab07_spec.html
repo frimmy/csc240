@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lab 7: Recursive StackSum and PowerStack</title>
+<style>
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+th[scope="row"] {
+  font-weight: normal; text-align: left;
+}
+</style>
+</head>
+<body style="margin:0; padding:0; font-family:Calibri,'Segoe UI',Candara,Arial,sans-serif; color:#3D4543; line-height:1.55;">
+
+<div style="max-width:900px; margin:0 auto; padding:0 4px;">
+
+  <h1 style="font-size:1.55em; color:#005850; margin:0 0 4px 0; padding-bottom:10px; border-bottom:3px solid #005850;">
+    Lab 7: Recursive StackSum and PowerStack
+  </h1>
+  <p style="margin:0 0 20px 0; font-size:0.97em;">
+    <strong style="color:#005850;">20 points</strong> &middot; Unit 5 &middot; Due Sunday, October 18, 11:59 PM
+  </p>
+
+  <p style="margin:0 0 14px 0;">This lab sits in Unit 5 rather than Unit 3 for one reason: you are using a stack to learn about the stack. Every recursive call you make pushes a frame onto the call stack while you manipulate a stack you built yourself. Holding both in your head at once is the point.</p>
+  <p style="margin:0 0 14px 0;"><code>StackSum</code> has a postcondition that makes it interesting: the stack must be unchanged when it returns. You cannot look at the buried items without removing them, so the work happens on the way back <em>up</em> the recursion, not on the way down. That is the distinction Shaffer &sect;4.2.4 is about.</p>
+
+  <h2 style="font-size:1.28em; color:#005850; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:2px solid #E6F0EF;">Specification</h2>
+
+  <p style="margin:0 0 14px 0;">Implement two member functions on <code>StackType</code>.</p>
+  
+  <p style="margin:0 0 14px 0;"><strong>a)</strong> A function that <strong>recursively</strong> sums the items (stored as
+  integers) of a stack:</p>
+  <pre style="margin:0 0 14px 0; padding:12px 16px; background:#F4F8F8; border-left:5px solid #006569; font-family:Consolas,'Courier New',monospace; font-size:0.9em; overflow-x:auto; line-height:1.4;">int StackSum()</pre>
+  <p style="margin:0 0 14px 0;"><strong>Function:</strong> Returns the sum of the integers stored in the stack.<br>
+  <strong>Precondition:</strong> The stack contains items (integers).<br>
+  <strong>Postcondition:</strong> The stack remains unchanged.</p>
+  
+  <p style="margin:0 0 14px 0;"><strong>b)</strong> A function that updates each integer item so that it becomes its own value
+  raised to the power of the value of the item below it. The top of the stack is used as the item
+  below the bottom item:</p>
+  <pre style="margin:0 0 14px 0; padding:12px 16px; background:#F4F8F8; border-left:5px solid #006569; font-family:Consolas,'Courier New',monospace; font-size:0.9em; overflow-x:auto; line-height:1.4;">void PowerStack()</pre>
+  <p style="margin:0 0 14px 0;"><strong>Function:</strong> Each item is replaced with its value raised to the power of the value
+  of the item below it. The bottom item is raised to the power of the item at the top.<br>
+  <strong>Precondition:</strong> The stack contains at least two items.<br>
+  <strong>Postcondition:</strong> The stack items are updated accordingly.</p>
+  
+  <p style="margin:0 0 14px 0;">Worked example (top of stack listed first):</p>
+  <pre style="margin:0 0 14px 0; padding:12px 16px; background:#F4F8F8; border-left:5px solid #006569; font-family:Consolas,'Courier New',monospace; font-size:0.9em; overflow-x:auto; line-height:1.4;">Before PowerStack:        After PowerStack:
+      2                         32          2^5  = 32
+      5                         125         5^3  = 125
+      3                         81          3^4  = 81
+      4                         4096        4^6  = 4096
+      6                         36          6^2  = 36   (bottom wraps to top)</pre>
+  
+  <p style="margin:0 0 14px 0;">Implement both functions using the <strong>templated linked</strong> and the <strong>templated
+  dynamic array-based</strong> versions of <code>StackType</code>.</p>
+
+  <h2 style="font-size:1.28em; color:#005850; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:2px solid #E6F0EF;">Files Provided</h2>
+
+  <p style="margin:0 0 14px 0; padding:12px 16px; background:#E6F0EF;">
+    <strong style="color:#005850;">Download <code>Lab 7 Files</code></strong> &mdash; it is the item directly below this document in Unit 5. Everything listed here is in that one zip. Unzip it into a single folder and compile there.
+  </p>
+  <ul style="margin:0 0 14px 0; padding-left:24px;">
+    <li style="margin-bottom:5px;"><code>templated linked StackType</code></li>
+    <li style="margin-bottom:5px;"><code>templated dynamic array-based StackType</code></li>
+  </ul>
+
+  <h2 style="font-size:1.28em; color:#005850; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:2px solid #E6F0EF;">AI Learning Query</h2>
+
+  <p style="margin:0 0 14px 0;">Have this conversation while you work. Start with the prompt below, continue for at least five exchanges, paste your own code in at least once, and push back at least once when an answer seems wrong or incomplete. This one is <strong>not submitted</strong>. It is here because it will make the lab easier, and because the habit is the point.</p>
+  <div style="margin:0 0 14px 0; padding:14px 18px; background:#FFFFFF; border:2px dashed #006569;">
+    <p style="margin:0; font-style:italic; font-size:0.97em;">&ldquo;I am writing a recursive function in C++ that sums the values in a stack, and the postcondition says the stack must be unchanged when it returns. Do not write it for me. Help me think through the base case, and then through what has to happen on the way back up the recursion to restore the stack. What goes wrong if I only think about the way down? I also want to understand how deep the call stack gets relative to the number of items.&rdquo;</p>
+  </div>
+
+  <h2 style="font-size:1.28em; color:#005850; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:2px solid #E6F0EF;">STL Counterpart</h2>
+
+  <p style="margin:0 0 14px 0; padding:12px 16px; background:#E6F0EF; font-size:0.96em;">
+    <strong style="color:#005850;">Ungraded &mdash; read this, do not submit it.</strong> <code>std::accumulate</code> over a container sums in one line, and <code>std::stack</code>'s deliberate lack of iterators is why you cannot use it here. Worth noticing: the standard library has no recursive algorithms at all &mdash; every one of them is iterative, for reasons directly related to Question 4 below. Your submission is recursive and your own.
+  </p>
+
+  <h2 style="font-size:1.28em; color:#005850; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:2px solid #E6F0EF;">Be Ready to Answer</h2>
+
+  <p style="margin:0 0 14px 0;">This lab has no Mini Oral. Question 1 is submitted in writing with your code and is graded under Design and Documentation; the rest are not submitted, but all of them are fair game in your Major Oral Inquiry.</p>
+  <p style="margin:0 0 14px 0; font-size:0.96em;">Every question below is about <em>your</em> submission. You may use AI to prepare &mdash; that is encouraged &mdash; but the answers must describe the code you actually wrote.</p>
+  <ol style="margin:0 0 16px 0; padding-left:24px;">
+    <li style="margin-bottom:10px;">State the invariant your <code>StackSum</code> recursion maintains about the stack at each level of the call. Write this as a comment above the function.</li>
+    <li style="margin-bottom:10px;">Trace <em>your</em> <code>StackSum</code> on a three-item stack. What does the stack contain at the deepest call, and what is on the call stack at that moment?</li>
+    <li style="margin-bottom:10px;">Run <code>PowerStack</code> on the worked example above and show your output. If any value differs, say which and why &mdash; overflow is a legitimate answer if you can demonstrate it.</li>
+    <li style="margin-bottom:10px;">How deep does your recursion go for a stack of n items? At roughly what n would you expect a stack overflow, and what would you do about it in production code?</li>
+    <li style="margin-bottom:10px;">The precondition for <code>PowerStack</code> says at least two items. Call it on a one-item stack anyway. What happened?</li>
+  </ol>
+
+  <h2 style="font-size:1.28em; color:#005850; margin:28px 0 12px 0; padding-bottom:6px; border-bottom:2px solid #E6F0EF;">Grading</h2>
+
+  <table style="width:100%; border-collapse:collapse; margin:0 0 14px 0; font-size:0.96em;"><caption class="sr-only">Grading: Criterion, What earns the points, Pts</caption>
+    <tr style="background:#005850; color:#FFFFFF;">
+      <th style="text-align:left; padding:9px 12px; width:30%;" scope="col">Criterion</th>
+      <th style="text-align:left; padding:9px 12px;" scope="col">What earns the points</th>
+      <th style="text-align:right; padding:9px 12px; width:10%;" scope="col">Pts</th>
+    </tr>
+    <tr>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;"><strong>Correctness and Specification</strong></td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;">Every requirement in the specification is met and demonstrated by the driver. Output matches what is stated above. Edge cases named in the specification behave correctly.</td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF; text-align:right;"><strong>10</strong></td>
+    </tr>
+    <tr style="background:#F4F8F8;">
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;"><strong>Data Structure Implementation</strong></td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;">The required structure is implemented as specified. No STL container is substituted for work the specification asks you to do yourself. Memory is allocated and released correctly.</td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF; text-align:right;"><strong>5</strong></td>
+    </tr>
+    <tr>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;"><strong>Design and Documentation</strong></td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;">Interface separated from implementation. Preconditions and postconditions documented on every public function you write or change.</td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF; text-align:right;"><strong>3</strong></td>
+    </tr>
+    <tr style="background:#F4F8F8;">
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;"><strong>Coding Conventions</strong></td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF;">Follows the Oakton C++ Coding Conventions: naming, indentation, commenting, file organization.</td>
+      <td style="padding:9px 12px; border-bottom:1px solid #E6F0EF; text-align:right;"><strong>2</strong></td>
+    </tr>
+    <tr style="background:#E6F0EF;">
+      <td style="padding:9px 12px; color:#005850;" colspan="2"><strong>Required work subtotal</strong></td>
+      <td style="padding:9px 12px; text-align:right; color:#005850;"><strong>20</strong></td>
+    </tr>
+    <tr style="background:#005850; color:#FFFFFF;">
+      <td style="padding:9px 12px;" colspan="2"><strong>Total</strong></td>
+      <td style="padding:9px 12px; text-align:right;"><strong>20</strong></td>
+    </tr>
+  </table>
+
+  <p style="margin:0 0 30px 0; padding:12px 16px; background:#E6F0EF; font-size:0.95em;">
+    <strong style="color:#005850;">Submitting.</strong> Upload all source files plus your driver to the Lab 7 dropbox. <strong>Late submissions are not accepted</strong> &mdash; the dropbox closes at the due date. Office hours are virtual, 30-minute slots, Monday through Friday 7:00&ndash;8:00 PM; the booking link is in <em>Start Here</em>.
+  </p>
+
+</div>
+
+</body>
+</html>

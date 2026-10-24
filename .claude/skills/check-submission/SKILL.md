@@ -55,6 +55,10 @@ have used zero-padded names (`Lab05_Frimpong.zip`), so if you see padding, flag 
 him to confirm rather than assuming either way. One file → `.cpp`, not `.zip`; only zip
 when the lab genuinely needs more than one file.
 
+For an AI Learning Transcript, the content checks (seed prompt, exchange count, required
+elements, reflection) live in the **`check-transcript`** skill. Run that instead of the
+lab checks below.
+
 ### 3. Zip completeness (multi-file labs)
 A submission that won't compile because a header is missing is graded as it arrived.
 List what the zip would contain and confirm **everything needed to build and run** is
