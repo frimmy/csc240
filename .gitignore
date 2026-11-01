@@ -78,3 +78,6 @@ main
 pointers
 hello_world
 CSC240_LinkedQueue_Driver
+
+# HTML files (specs, generated TODOs)
+*.html
