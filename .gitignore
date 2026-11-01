@@ -69,3 +69,12 @@ Testing/
 .cache/
 .vscode
 .DS_Store
+
+# Videos, archives, and macOS build output
+*.mp4
+*.zip
+*.dSYM/
+main
+pointers
+hello_world
+CSC240_LinkedQueue_Driver
