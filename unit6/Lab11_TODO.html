@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 11 TODO</title>
+<style>
+  :root {
+    --bg: #fbfaf7; --fg: #1f2328; --muted: #5d6670; --card: #ffffff; --border: #e3e0d8;
+    --accent: #0f6e5c; --accent-soft: #e4f2ee; --code-bg: #f3f1ec; --warn: #9a5b00; --warn-soft: #fdf1dc;
+    --bad: #a1262e; --q-bg: #f6f4ff; --q-border: #6a5acd;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15181c; --fg: #e6e8eb; --muted: #9aa3ad; --card: #1d2126; --border: #2e343b;
+      --accent: #5cc8b0; --accent-soft: #1b3330; --code-bg: #111418; --warn: #f0b45a; --warn-soft: #3a2c14;
+      --bad: #ff8a8f; --q-bg: #1f1d2e; --q-border: #9d8cff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 880px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font-size: 1.8rem; margin: 0 0 4px; }
+  h2 { font-size: 1.3rem; margin: 48px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--accent); }
+  h2 .pts { float: right; font-size: .9rem; color: var(--accent); font-weight: 600; padding-top: 6px; }
+  h3 { font-size: 1.05rem; margin: 0 0 8px; }
+  .meta { color: var(--muted); margin: 0 0 4px; }
+  code { font: .88em/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; margin: 10px 0; }
+  pre code { background: none; padding: 0; font-size: .85rem; }
+  .task { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin: 16px 0; }
+  .task.done { opacity: .6; }
+  .task-head { display: flex; gap: 10px; align-items: flex-start; }
+  .task-head input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0; }
+  .label { font-weight: 700; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); display: block; margin: 12px 0 2px; }
+  .done-when { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 10px 0; }
+  .questions { background: var(--q-bg); border-left: 3px solid var(--q-border); padding: 8px 12px 8px 12px; border-radius: 0 6px 6px 0; margin: 10px 0 0; }
+  .questions ul { margin: 4px 0; padding-left: 20px; }
+  .questions li { margin: 6px 0; }
+  .move { font-style: italic; font-weight: 600; }
+  .flag { background: var(--warn-soft); color: var(--warn); padding: 1px 6px; border-radius: 4px; font-size: .85em; font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .92rem; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  .table-wrap { overflow-x: auto; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; display: flex; gap: 10px; align-items: flex-start; }
+  .checklist input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0; }
+  .progress { position: sticky; top: 0; background: var(--bg); padding: 10px 0; border-bottom: 1px solid var(--border); z-index: 2; font-size: .9rem; color: var(--muted); }
+  .bar { height: 6px; background: var(--border); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+  .bar > div { height: 100%; background: var(--accent); width: 0; transition: width .2s; }
+  .callout { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lab 11: TreeType Ancestors</h1>
+  <p class="meta"><strong>Due</strong> Sun Nov 1, 11:59 PM · <strong>50 pts</strong> (30 required + 20 Creative Final Feature)</p>
+  <p class="meta"><strong>Source of truth:</strong> <code>unit6/Lab 11_ TreeType Ancestors (50 pts) …pdf</code>. There's no HTML spec on disk, so the expected output and Figure 1 were checked against the rendered pages 1–2.</p>
+  <p class="meta"><strong>Transcript lab:</strong> yes. This lab's AI Learning Query is the graded Transcript 6. It also has <strong>Mini Oral 5</strong>.</p>
+
+  <div class="progress">
+    <span id="progress-text">0 of 0 done</span>
+    <div class="bar"><div id="progress-bar"></div></div>
+  </div>
+
+  <h2>Current state</h2>
+  <p>Clean build of the provided files in a scratch folder:</p>
+<pre><code>$ g++ -std=c++17 -Wall -Wextra -g TreeDr.cpp -o tree
+TreeType.h:422:47: warning: unused parameter 'item' [-Wunused-parameter]
+TreeType.h:427:62: warning: unused parameter 'node' [-Wunused-parameter]
+TreeType.h:427:77: warning: unused parameter 'item' [-Wunused-parameter]
+TreeType.h:424:1:  warning: non-void function does not return a value [-Wreturn-type]
+
+$ ./tree
+$ echo $?
+133        # SIGTRAP, nothing printed</code></pre>
+  <p>When a function that should return a value falls off its end, the behavior is undefined, and clang inserts a trap there. That's why <code>leaks</code> can't report: the program never reaches exit. Every file in <code>Lab11_Files/</code> still has the instructor's Oct 10 timestamp. Nothing is yours yet.</p>
+
+  <!-- ───────────────────────── A ───────────────────────── -->
+  <h2>A. Correctness &amp; Specification <span class="pts">15 pts</span></h2>
+
+  <div class="task" data-id="A1">
+    <div class="task-head"><input type="checkbox"><h3>A1. Implement <code>Ancestors</code> / <code>AncestorsNext</code> so the driver prints <code>J P U S</code></h3></div>
+    <span class="label">Evidence</span>
+    <p>Both bodies are stubs, and the run traps (see above):</p>
+<pre><code>template &lt;class ItemType&gt;
+string TreeType&lt;ItemType&gt;::Ancestors(ItemType item) const{
+	//complete this
+}
+
+template &lt;class ItemType&gt;
+string TreeType&lt;ItemType&gt;::AncestorsNext(TreeNode&lt;ItemType&gt;* node, ItemType item) const{
+	//Base case: the item node is found
+
+	//Recursive case: go down to the next ancestor/parent: top-left or top-right parent?
+
+}</code></pre>
+    <div class="done-when"><strong>Done when:</strong> the provided <code>TreeDr.cpp</code>, <em>unmodified</em>, prints exactly the spec line (page 2), and the build has <strong>zero</strong> warnings.
+<pre><code>J P U S</code></pre></div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Draw it first:</span> on Figure 1, trace the BST search for <code>T</code> with your finger and write down each node you touch, in order. Then write the order your <em>function</em> hands back strings as the recursion unwinds. Which of those two orders matches <code>J P U S</code>?</li>
+        <li><span class="move">Explain it back:</span> <code>AncestorsNext</code> takes a <code>TreeNode*</code>, but <code>Ancestors</code> only takes the item. Why can't the public function recurse on itself, and what does it have to hand the helper on the first call?</li>
+        <li><span class="move">Predict, then run:</span> you already know which branch to take at every node. Before you write anything, predict how many calls happen for <code>T</code> and for <code>Y</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="A2">
+    <div class="task-head"><input type="checkbox"><h3>A2. Decide the output format exactly</h3></div>
+    <span class="label">Evidence</span>
+    <p>The spec shows <code>J P U S</code>, with a space between letters. It doesn't say whether a trailing space is allowed. The driver prints the result followed by <code>endl</code>.</p>
+    <div class="done-when"><strong>Done when:</strong> you've chosen a separator convention you can defend, and the bytes are exactly what you intended:
+<pre><code>./tree | od -c</code></pre>
+    <span class="flag">📄 confirm against lab doc</span> If you're unsure whether a trailing space costs points, ask the instructor.</div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Challenge and verify:</span> where in your recursion does the separator get added: before each name, after each name, or between names? Which of those makes the root case and the one-ancestor case come out clean with no extra logic?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="A3">
+    <div class="task-head"><input type="checkbox"><h3>A3. Edge cases the spec names (Mini Oral Q4)</h3></div>
+    <span class="label">Evidence</span>
+    <p>Q4 asks you to call it on a value <strong>not in the tree</strong> and on <strong>the root itself</strong>. The provided driver tests neither. The lab's AI prompt also asks "what should happen when the value is not in the tree at all."</p>
+    <div class="done-when"><strong>Done when:</strong> your driver shows labeled output for each case below. Your calls go <em>after</em> the provided call, which stays untouched.
+      <ol>
+        <li><code>T</code> → <code>J P U S</code></li>
+        <li>the root <code>J</code> → whatever you decided, and you can say why</li>
+        <li>a missing value (e.g. <code>"Q"</code> or <code>"Z"</code>) → whatever you decided. It must be <strong>distinguishable from case 2</strong>, or you can justify why it isn't.</li>
+        <li>an empty tree</li>
+        <li>a deep leaf (<code>Y</code>) and a left-side node (<code>F</code>) as sanity checks</li>
+      </ol>
+    </div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Challenge and verify:</span> the root has no ancestors, and a missing value has "no ancestors" too. If both come back as <code>""</code>, how does a caller tell them apart? Name two ways the <em>function's design</em> could make that difference visible without changing the required signature.</li>
+        <li><span class="move">Predict, then run:</span> the search for a missing value walks a path and then hits <code>NULL</code>. Predict whether your function returns that partial path (e.g. <code>J P K L</code> for <code>"M"</code>), then run it. Is that what you want?</li>
+        <li><span class="move">Draw it first:</span> for <code>"M"</code>, draw the path to the <code>NULL</code> you fall off. Which call first "knows" the item isn't there, and how does that knowledge get back up to the callers that already have a name in hand?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="A4">
+    <div class="task-head"><input type="checkbox"><h3>A4. The header comments say "reverse order", but the spec says root-first</h3></div>
+    <span class="label">Evidence</span>
+<pre><code>// TreeType.h:420
+// This recursive function will return the ancestors of item in reverse order.
+
+// TreeDr.cpp header
+// representing the ancestors (in reverse order) of a particular node ...</code></pre>
+    <p>The spec says the output reads <strong>root first, immediate parent last</strong>. That's the reverse of walking <em>up</em> from T.</p>
+    <div class="done-when"><strong>Done when:</strong> your comment above <code>Ancestors</code> says unambiguously which order the function produces.</div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Explain it back:</span> "reverse order" relative to what? Write one sentence that would make the old comment correct, then decide whether to keep that framing or replace it.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── B ───────────────────────── -->
+  <h2>B. Data Structure Implementation <span class="pts">8 pts</span></h2>
+
+  <div class="task" data-id="B1">
+    <div class="task-head"><input type="checkbox"><h3>B1. Use the tree, not a container</h3></div>
+    <span class="label">Evidence</span>
+    <p>The rubric says: "No STL container is substituted for work the specification asks you to do yourself." The STL Counterpart box says the same thing about <code>std::set</code>/<code>std::map</code>.</p>
+    <div class="done-when"><strong>Done when:</strong> the ancestor path comes from your recursion over <code>TreeNode</code> pointers. No <code>vector</code>/<code>stack</code>/<code>deque</code> collects nodes for you to reverse later. (<code>std::string</code> as the return type is required by the signature.)</div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Ask about cost:</span> compare collecting the path into a stack and popping it with letting the call stack do the reversal. What's the extra space of each, in terms of the tree height <em>h</em>?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="B2">
+    <div class="task-head"><input type="checkbox"><h3>B2. <code>ItemType</code> → <code>string</code></h3></div>
+    <span class="label">Evidence</span>
+    <p><code>TreeType</code> is a template, but <code>Ancestors</code> must return a <code>string</code>. The driver instantiates <code>TreeType&lt;string&gt;</code>, so concatenating <code>info</code> happens to compile.</p>
+    <div class="done-when"><strong>Done when:</strong> you can state which <code>ItemType</code>s your implementation works for. Optionally, it also compiles for <code>TreeType&lt;int&gt;</code> or <code>TreeType&lt;char&gt;</code>, if you choose to support that.</div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Predict, then run:</span> in a scratch file, instantiate <code>TreeType&lt;int&gt;</code> and call <code>Ancestors(5)</code>. Predict whether it compiles before you try. Templates only instantiate the member functions that are called, so why does that matter here?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="B3">
+    <div class="task-head"><input type="checkbox"><h3>B3. Memory: 0 leaks with your added calls</h3></div>
+    <div class="done-when"><strong>Done when:</strong> your final driver, including the missing-value and empty-tree cases, reports:
+<pre><code>$ leaks --atExit -- ./tree
+...
+Process NNNN: 0 leaks for 0 total leaked bytes.</code></pre></div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Explain it back:</span> <code>Ancestors</code> is <code>const</code> and allocates no nodes. So what in your driver run <em>could</em> still leak? (Think about what the starter's <code>ResetTree</code> and <code>QueType</code> allocate. Do you call them?)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="B4">
+    <div class="task-head"><input type="checkbox"><h3>B4. Provided code that will bite you if your CFF touches it</h3></div>
+    <p>These aren't yours to fix unless you change them.</p>
+    <ul>
+      <li><span class="bad"><code>Delete</code> (TreeType.h:170) dereferences <code>tree-&gt;info</code> without a NULL check.</span> <code>DeleteItem</code> on a missing value crashes.
+<pre><code>template &lt;class ItemType&gt;
+void Delete(TreeNode&lt;ItemType&gt;*&amp; tree, ItemType item)
+{
+  if (item &lt; tree-&gt;info)        // tree may be NULL here
+  ...</code></pre></li>
+      <li><code>catch(bad_alloc exception)</code> (line 61) catches by value, which newer compilers warn about.</li>
+      <li><code>ResetTree</code> enqueues without clearing the queue first, so calling it twice duplicates items.</li>
+    </ul>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Challenge and verify:</span> what's the smallest call sequence on the provided driver's tree that makes <code>DeleteItem</code> segfault? If your CFF (e.g. <code>Descendants</code>) uses the traversal queues, which of these gaps do you inherit?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── C ───────────────────────── -->
+  <h2>C. Design &amp; Documentation · Conventions <span class="pts">4 + 3 pts</span></h2>
+
+  <div class="task" data-id="C1">
+    <div class="task-head"><input type="checkbox"><h3>C1. Pre/Post on every function you write or change</h3></div>
+    <span class="label">Evidence</span>
+    <p>Neither stub has a <code>Pre:</code>/<code>Post:</code> block. Neighbors show the style:</p>
+<pre><code>template &lt;class ItemType&gt;
+void Retrieve(TreeNode&lt;ItemType&gt;* tree,
+     ItemType&amp; item, bool&amp; found)
+// Recursively searches tree for item.
+// Post: If there is an element someItem whose key matches item's,
+//       found is true and item is set to a copy of someItem;
+//       otherwise found is false and item is unchanged.</code></pre>
+    <div class="done-when"><strong>Done when:</strong> <code>Ancestors</code>, <code>AncestorsNext</code>, and every CFF function have accurate Pre/Post comments that describe <em>your</em> not-found and root behavior (A3).</div>
+  </div>
+
+  <div class="task" data-id="C2">
+    <div class="task-head"><input type="checkbox"><h3>C2. Mini Oral Q1 in writing, as a comment above the function</h3></div>
+    <div class="done-when"><strong>Done when:</strong> a comment above <code>Ancestors</code> (or the helper) states your <strong>base case(s)</strong> and the <strong>invariant</strong> about the string built so far.</div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Explain it back:</span> fill in "When <code>AncestorsNext(node, item)</code> returns, the string it returns contains ___ in ___ order." If you can't fill both blanks precisely, the invariant isn't pinned down yet.</li>
+        <li>How many base cases do you have: found, fell off the tree, or both? Does "found" return the found node's own name or not?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="C3">
+    <div class="task-head"><input type="checkbox"><h3>C3. <code>AncestorsNext</code> is public</h3></div>
+    <span class="label">Evidence</span>
+<pre><code>public:
+  ...
+  string Ancestors(ItemType item) const;
+  string AncestorsNext(TreeNode&lt;ItemType&gt;* node, ItemType item) const;   // TreeType.h:33
+private:
+  TreeNode&lt;ItemType&gt;* root;</code></pre>
+    <div class="done-when"><strong>Done when:</strong> you've decided whether it belongs in <code>private:</code> and can justify the choice in the oral. The declaration is instructor-provided, so moving it changes the header.</div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Explain it back:</span> could a driver even call <code>AncestorsNext</code> meaningfully, given that <code>root</code> is private? What does that tell you about where it belongs?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="C4">
+    <div class="task-head"><input type="checkbox"><h3>C4. Oakton conventions</h3></div>
+    <div class="done-when"><strong>Done when:</strong> your additions use consistent indentation (the stubs use tabs and the rest of the file uses 2 spaces, so pick one). Your additions also need a header comment with your name and date, and no leftover <code>//complete this</code> placeholders.</div>
+  </div>
+
+  <!-- ───────────────────────── D ───────────────────────── -->
+  <h2>D. Creative Final Feature <span class="pts">20 pts</span></h2>
+
+  <div class="task" data-id="D1">
+    <div class="task-head"><input type="checkbox"><h3>D1. Do the AI Learning Query FIRST</h3></div>
+    <p>It's where the CFF's "concept" points come from, and it's your graded Transcript 6.</p>
+    <div class="done-when"><strong>Done when:</strong> the conversation starts with the exact seed prompt (spec page 3) and runs <strong>≥ 5 exchanges</strong>. It includes <strong>your own code pasted in</strong> at least once and shows you <strong>pushing back</strong> at least once. Export it as the Transcript 6 PDF.</div>
+  </div>
+
+  <div class="task" data-id="D2">
+    <div class="task-head"><input type="checkbox"><h3>D2. Pick and build one extension</h3></div>
+    <p class="meta">6 pts runs · 4 pts creative &amp; self-chosen · 6 pts demonstrates the AI-query concept</p>
+    <p>Suggested: <code>Depth(item)</code>, <code>Path(item)</code> (includes the node itself), <code>CommonAncestor(a, b)</code> (LCA), an <strong>iterative <code>Ancestors</code></strong> for comparison, <code>Descendants(item)</code>. The "genuinely creative" points reward going beyond copying one of these verbatim. A twist on one of them counts.</p>
+    <div class="done-when"><strong>Done when:</strong> it's declared in the class, has Pre/Post comments, and gets called from the driver with labeled output covering the normal, root, and missing cases. The build is warning-free and <code>leaks</code> reports 0.</div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Ask about cost:</span> for LCA in a BST, how does the BST property let you stop early compared with LCA in an ordinary binary tree? Give Big-O for each in terms of <em>h</em> and <em>n</em>.</li>
+        <li><span class="move">Predict, then run:</span> <code>CommonAncestor("T", "Y")</code> on Figure 1. What about when <code>a</code> is an ancestor of <code>b</code>, e.g. (<code>P</code>, <code>T</code>)? Is a node its own common ancestor under your definition?</li>
+        <li><span class="move">Explain it back:</span> if you build an iterative <code>Ancestors</code>, how does it get root-first order without the call stack doing the reversal? Does it still need extra space?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="task" data-id="D3">
+    <div class="task-head"><input type="checkbox"><h3>D3. Feature Documentation block <span class="pts" style="float:none">4 pts</span></h3></div>
+    <div class="done-when"><strong>Done when:</strong> a comment at the top of your main file (driver) answers all four questions:
+      <ol>
+        <li>What does your feature do?</li>
+        <li>What concept from your AI Learning Query did it use?</li>
+        <li>What did you try that did not work?</li>
+        <li>What would you do next if you had another week?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ───────────────────────── Cross-cutting ───────────────────────── -->
+  <h2>Cross-cutting</h2>
+  <p><strong>Mini Oral Q3</strong> asks for the first row of this table. Fill it in from <em>your</em> code, and count string concatenation too. Does building the result with <code>+</code> at each level change the bound from O(h)?</p>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Operation</th><th>Time (height <em>h</em>)</th><th>Balanced tree</th><th>Sorted-input tree</th><th>Extra space</th></tr>
+    <tr><td><code>Ancestors</code> (yours)</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    <tr><td>your CFF</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+  </table>
+  </div>
+  <div class="callout"><strong><code>const</code>:</strong> <code>Ancestors</code> and <code>AncestorsNext</code> are both <code>const</code>. What would the compiler stop you from doing inside them? Make your CFF functions <code>const</code> where they should be.</div>
+  <div class="questions"><strong>Concept questions (Mini Oral Q2, Q5)</strong>
+    <ul>
+      <li><strong>Q2:</strong> point to the <em>one line</em> where a name is added to the result. Is it before or after the recursive call, and why does that position decide root-first vs. parent-first?</li>
+      <li><strong>Q5:</strong> in an ordinary binary tree with no ordering, you can't choose a direction. What does the recursion have to do instead, and how does the helper signal "found it down this branch" to its caller? What's the new Big-O?</li>
+    </ul>
+  </div>
+
+  <!-- ───────────────────────── Submit ───────────────────────── -->
+  <h2>Submit</h2>
+  <ul class="checklist">
+    <li data-id="S1"><input type="checkbox"><span>Clean build in a fresh folder with <strong>0 warnings</strong>, and the provided call prints <code>J P U S</code>:<pre><code>g++ -std=c++17 -Wall -Wextra -g TreeDr.cpp -o tree &amp;&amp; ./tree</code></pre></span></li>
+    <li data-id="S2"><input type="checkbox"><span><code>leaks --atExit -- ./tree</code> reports <strong>0 leaks</strong></span></li>
+    <li data-id="S3"><input type="checkbox"><span>Q1 base-case/invariant comment above the function (C2)</span></li>
+    <li data-id="S4"><input type="checkbox"><span>Feature Documentation block at the top of the driver (D3)</span></li>
+    <li data-id="S5"><input type="checkbox"><span>Package with correct <code>Frimpong</code> naming, then run <strong>check-submission</strong></span></li>
+    <li data-id="S6"><input type="checkbox"><span>AI Learning Query exported as Transcript 6, then run <strong>check-transcript</strong>, then upload to the AI Learning Transcript 6 dropbox</span></li>
+    <li data-id="S7"><input type="checkbox"><span>Mini Oral 5 recorded with your code on screen, answering Q1–Q5</span></li>
+  </ul>
+</main>
+<script>
+  const KEY = "csc240-lab11-todo";
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
+  const items = [...document.querySelectorAll("[data-id]")];
+  function render() {
+    let done = 0;
+    items.forEach(el => {
+      const on = !!state[el.dataset.id];
+      el.querySelector("input").checked = on;
+      if (el.classList.contains("task")) el.classList.toggle("done", on);
+      if (on) done++;
+    });
+    document.getElementById("progress-text").textContent = `${done} of ${items.length} done`;
+    document.getElementById("progress-bar").style.width = `${(100 * done / items.length).toFixed(0)}%`;
+  }
+  items.forEach(el => el.querySelector("input").addEventListener("change", e => {
+    state[el.dataset.id] = e.target.checked;
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (err) {}
+    render();
+  }));
+  render();
+</script>
+</body>
+</html>

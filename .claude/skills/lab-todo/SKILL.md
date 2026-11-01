@@ -73,7 +73,16 @@ function that allocated it and the cause, in words. Leaks in copy constructors,
   being built.
 
 ### 6. Write the TODO
-Write `unitN/LabNN_TODO.md` (zero-pad to match the `LabNN_Files` folder), uncommitted.
+Write `unitN/LabNN_TODO.html` (zero-pad to match the `LabNN_Files` folder), uncommitted,
+then `open` it in the browser. Start from `template.html` in this skill's folder: keep
+its CSS and checkbox/progress script, and set the `<title>` and the `localStorage` key
+to the lab number. Each task is a `.task` block with a unique `data-id`. Put Evidence,
+a `.done-when` box and a `.questions` box in it. Put compiler/run/`leaks` output and
+quoted *existing* code (starter stubs, the lines a gap points at) in
+`<pre><code>`, HTML-escaped (`&lt;`, `&gt;`, `&amp;`). A code block is for evidence
+only. It never shows a fix, which keeps to the no-code rule above. Mark lab-doc-dependent
+items with `<span class="flag">📄 confirm against lab doc</span>`.
+
 Group the tasks by program/class and order them by rubric weight, with correctness
 first. For each task include:
 
@@ -93,7 +102,7 @@ first. For each task include:
   questions whose answer is the fix itself ("should you call delete here?").
 
 End the file with a **Cross-cutting** section (Big-O table, `const`, concept questions)
-and a **Submit** section with these steps:
+and a **Submit** section (a `.checklist` of `data-id` items) with these steps:
 - clean build plus 0 leaks
 - Feature Documentation block, if the lab has a Creative Final Feature
 - package with the correct name, then run **check-submission**

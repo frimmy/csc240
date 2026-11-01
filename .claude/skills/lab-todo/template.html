@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab NN TODO</title>
+<style>
+  :root {
+    --bg: #fbfaf7; --fg: #1f2328; --muted: #5d6670; --card: #ffffff; --border: #e3e0d8;
+    --accent: #0f6e5c; --accent-soft: #e4f2ee; --code-bg: #f3f1ec; --warn: #9a5b00; --warn-soft: #fdf1dc;
+    --bad: #a1262e; --q-bg: #f6f4ff; --q-border: #6a5acd;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15181c; --fg: #e6e8eb; --muted: #9aa3ad; --card: #1d2126; --border: #2e343b;
+      --accent: #5cc8b0; --accent-soft: #1b3330; --code-bg: #111418; --warn: #f0b45a; --warn-soft: #3a2c14;
+      --bad: #ff8a8f; --q-bg: #1f1d2e; --q-border: #9d8cff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 880px; margin: 0 auto; padding: 32px 16px 80px; }
+  h1 { font-size: 1.8rem; margin: 0 0 4px; }
+  h2 { font-size: 1.3rem; margin: 48px 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--accent); }
+  h2 .pts { float: right; font-size: .9rem; color: var(--accent); font-weight: 600; padding-top: 6px; }
+  h3 { font-size: 1.05rem; margin: 0 0 8px; }
+  .meta { color: var(--muted); margin: 0 0 4px; }
+  code { font: .88em/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; overflow-x: auto; margin: 10px 0; }
+  pre code { background: none; padding: 0; font-size: .85rem; }
+  .task { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin: 16px 0; }
+  .task.done { opacity: .6; }
+  .task-head { display: flex; gap: 10px; align-items: flex-start; }
+  .task-head input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0; }
+  .label { font-weight: 700; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); display: block; margin: 12px 0 2px; }
+  .done-when { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 10px 0; }
+  .questions { background: var(--q-bg); border-left: 3px solid var(--q-border); padding: 8px 12px 8px 12px; border-radius: 0 6px 6px 0; margin: 10px 0 0; }
+  .questions ul { margin: 4px 0; padding-left: 20px; }
+  .questions li { margin: 6px 0; }
+  .move { font-style: italic; font-weight: 600; }
+  .flag { background: var(--warn-soft); color: var(--warn); padding: 1px 6px; border-radius: 4px; font-size: .85em; font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .92rem; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  .table-wrap { overflow-x: auto; }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; display: flex; gap: 10px; align-items: flex-start; }
+  .checklist input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0; }
+  .progress { position: sticky; top: 0; background: var(--bg); padding: 10px 0; border-bottom: 1px solid var(--border); z-index: 2; font-size: .9rem; color: var(--muted); }
+  .bar { height: 6px; background: var(--border); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+  .bar > div { height: 100%; background: var(--accent); width: 0; transition: width .2s; }
+  .callout { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Lab NN: TITLE</h1>
+  <p class="meta"><strong>Due</strong> DATE · <strong>NN pts</strong> (breakdown)</p>
+  <p class="meta"><strong>Source of truth:</strong> <code>spec file</code></p>
+  <p class="meta"><strong>Transcript lab:</strong> yes/no · Mini Oral: yes/no</p>
+
+  <div class="progress">
+    <span id="progress-text">0 of 0 done</span>
+    <div class="bar"><div id="progress-bar"></div></div>
+  </div>
+
+  <h2>Current state</h2>
+<pre><code>build / run / leaks output, HTML-escaped</code></pre>
+
+  <h2>A. Rubric category <span class="pts">NN pts</span></h2>
+
+  <!-- One .task per TODO item; data-id must be unique (drives the saved checkbox state). -->
+  <div class="task" data-id="A1">
+    <div class="task-head"><input type="checkbox"><h3>A1. Title</h3></div>
+    <span class="label">Evidence</span>
+    <p>What the build, run, or leaks showed.</p>
+<pre><code>quoted output or EXISTING code (never a fix)</code></pre>
+    <div class="done-when"><strong>Done when:</strong> observable check. <span class="flag">📄 confirm against lab doc</span></div>
+    <div class="questions"><strong>Check for understanding</strong>
+      <ul>
+        <li><span class="move">Predict, then run:</span> question</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Cross-cutting</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Operation</th><th>Time</th><th>Extra space</th></tr>
+    <tr><td><code>Fn</code></td><td>?</td><td>?</td></tr>
+  </table></div>
+
+  <h2>Submit</h2>
+  <ul class="checklist">
+    <li data-id="S1"><input type="checkbox"><span>Clean build + 0 leaks</span></li>
+  </ul>
+</main>
+<script>
+  const KEY = "csc240-labNN-todo";
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
+  const items = [...document.querySelectorAll("[data-id]")];
+  function render() {
+    let done = 0;
+    items.forEach(el => {
+      const on = !!state[el.dataset.id];
+      el.querySelector("input").checked = on;
+      if (el.classList.contains("task")) el.classList.toggle("done", on);
+      if (on) done++;
+    });
+    document.getElementById("progress-text").textContent = `${done} of ${items.length} done`;
+    document.getElementById("progress-bar").style.width = `${(100 * done / items.length).toFixed(0)}%`;
+  }
+  items.forEach(el => el.querySelector("input").addEventListener("change", e => {
+    state[el.dataset.id] = e.target.checked;
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (err) {}
+    render();
+  }));
+  render();
+</script>
+</body>
+</html>
