@@ -82,3 +82,4 @@ CSC240_LinkedQueue_Driver
 # HTML files (specs, generated TODOs)
 *.html
 !.claude/skills/**/*.html
+group_lab/CSC240GroupLab/
